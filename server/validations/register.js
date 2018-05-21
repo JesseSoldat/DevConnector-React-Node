@@ -25,7 +25,7 @@ module.exports = user => {
     errors.password2 = "Passwords must match";
   }
 
-  const isValid = !!Object.keys(errors).length;
+  const isValid = Object.keys(errors).length < 1;
 
   return {
     errors,
