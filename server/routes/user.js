@@ -1,11 +1,12 @@
 const gravatar = require("gravatar");
 
 const User = require("../models/User");
+const validateRegisterInput = require("../validations/register");
 
 module.exports = app => {
   app.post("/auth/register", async (req, res) => {
-    const { name, email, password } = req.body;
-    let errors = {};
+    const { name, email, password, password2 } = req.body;
+    const { errors } = validateRegisterInput(req.body);
 
     try {
       const user = await User.findOne({ email });
