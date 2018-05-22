@@ -43,8 +43,8 @@ module.exports = app => {
     try {
       const user = await User.findByCredentials(email, password, errors);
       const token = await user.generateAuthToken();
+      // console.log("errors#1", errors);
       res.send({ token });
-      console.log("errors#1", errors);
     } catch (err) {
       console.log("errors#2", errors);
     }
