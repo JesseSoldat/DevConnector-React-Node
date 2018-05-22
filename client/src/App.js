@@ -7,6 +7,7 @@ import store from "./store";
 // Components
 import NotFoundPage from "./pages/NotFound";
 import LoginPage from "./pages/Login";
+import RegisterPage from "./pages/Register";
 const LandingPage = () => <h1>Landing</h1>;
 
 class App extends Component {
@@ -18,6 +19,7 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={LandingPage} />
               <Route exact path="/login" component={LoginPage} />
+              <Route exact path="/register" component={RegisterPage} />
               <Route component={NotFoundPage} />
             </Switch>
           </div>

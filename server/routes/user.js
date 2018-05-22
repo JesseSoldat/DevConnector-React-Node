@@ -7,6 +7,7 @@ module.exports = app => {
   const errors = {};
   app.post("/auth/register", async (req, res) => {
     const { name, email, password, password2 } = req.body;
+
     const { errors, isValid } = validateRegisterInput(req.body);
 
     if (!isValid) return res.status(400).json(errors);
@@ -29,7 +30,8 @@ module.exports = app => {
           avatar
         });
         await newUser.save();
-        res.json(newUser);
+        const token = await newUser.generateAuthToken();
+        res.json(token);
       }
     } catch (err) {
       errors.error = "Something went wrong. Please try again";
@@ -44,7 +46,7 @@ module.exports = app => {
       const user = await User.findByCredentials(email, password, errors);
       const token = await user.generateAuthToken();
       // console.log("errors#1", errors);
-      res.send({ token });
+      res.send(token);
     } catch (err) {
       console.log("errors#2", errors);
     }

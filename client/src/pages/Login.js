@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import TextFieldGroup from "../components/TextFieldGroup";
+import { loginUser } from "../actions/auth";
 
 class LoginPage extends Component {
   state = {
@@ -11,12 +12,16 @@ class LoginPage extends Component {
     errors: {}
   };
 
+  componentDidMount() {}
+
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
   onSubmit = e => {
     e.preventDefault();
+    const { email, password } = this.state;
+    this.props.loginUser({ email, password });
   };
   render() {
     const { email, password, errors } = this.state;
@@ -57,6 +62,13 @@ class LoginPage extends Component {
   }
 }
 
-LoginPage.propTypes = {};
+LoginPage.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
 
-export default LoginPage;
+const mapStateToProps = ({ auth }) => ({
+  auth
+});
+
+export default connect(mapStateToProps, { loginUser })(LoginPage);

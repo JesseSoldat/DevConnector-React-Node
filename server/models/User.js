@@ -52,9 +52,12 @@ UserSchema.pre("save", function(next) {
 
 UserSchema.methods.generateAuthToken = async function() {
   const user = this;
-  const { id, name, avatar } = user;
-  const payload = { id, name, avatar };
+  // console.log("user ", user);
+
+  const { _id, name, avatar } = user;
+  const payload = { _id, name, avatar };
   const token = jwt.sign(payload, jwtKey).toString();
+
   return token;
 };
 
