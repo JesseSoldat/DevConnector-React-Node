@@ -4,9 +4,12 @@ import { withRouter } from "react-router-dom";
 
 import TextFieldGroup from "../components/TextFieldGroup";
 import SelectListGroup from "../components/SelectListGroup";
+import TextAreaFieldGroup from "../components/TextAreaFieldGroup";
+import InputGroup from "../components/InputGroup";
 
 class CreateProfilePage extends Component {
   state = {
+    displaySocialInputs: false,
     handle: "",
     company: "",
     website: "",
@@ -31,6 +34,12 @@ class CreateProfilePage extends Component {
     e.preventDefault();
   };
 
+  onToggleSocialIcons = e => {
+    this.setState(prevState => ({
+      displaySocialInputs: !prevState.displaySocialInputs
+    }));
+  };
+
   render() {
     const options = [
       { label: "* Select Professional Status", value: 0 },
@@ -45,6 +54,7 @@ class CreateProfilePage extends Component {
     ];
 
     const {
+      displaySocialInputs,
       handle,
       company,
       website,
@@ -60,6 +70,60 @@ class CreateProfilePage extends Component {
       instagram,
       errors
     } = this.state;
+
+    let socialInputs;
+
+    if (displaySocialInputs) {
+      socialInputs = (
+        <div>
+          <InputGroup
+            placeholder="Twitter Profile URL"
+            name="twitter"
+            icon="fab fa-twitter"
+            value={twitter}
+            onChange={this.onChange}
+            error={errors.twitter}
+          />
+
+          <InputGroup
+            placeholder="Facebook Page URL"
+            name="facebook"
+            icon="fab fa-facebook"
+            value={facebook}
+            onChange={this.onChange}
+            error={errors.facebook}
+          />
+
+          <InputGroup
+            placeholder="Linkedin Profile URL"
+            name="linkedin"
+            icon="fab fa-linkedin"
+            value={linkedin}
+            onChange={this.onChange}
+            error={errors.linkedin}
+          />
+
+          <InputGroup
+            placeholder="YouTube Channel URL"
+            name="youtube"
+            icon="fab fa-youtube"
+            value={youtube}
+            onChange={this.onChange}
+            error={errors.youtube}
+          />
+
+          <InputGroup
+            placeholder="Instagram Page URL"
+            name="instagram"
+            icon="fab fa-instagram"
+            value={instagram}
+            onChange={this.onChange}
+            error={errors.instagram}
+          />
+        </div>
+      );
+    }
+
     return (
       <div className="create-profile">
         <div className="container">
@@ -127,6 +191,30 @@ class CreateProfilePage extends Component {
                   onChange={this.onChange}
                   error={errors.githubusername}
                   info="If you want your latest repos and a Github link, include your username"
+                />
+                <TextAreaFieldGroup
+                  placeholder="Short Bio"
+                  name="bio"
+                  value={bio}
+                  onChange={this.onChange}
+                  error={errors.bio}
+                  info="Tell us a little bit about yourself"
+                />
+                <div className="mb-3 mt-2">
+                  <button
+                    className="btn btn-light"
+                    type="button"
+                    onClick={this.onToggleSocialIcons}
+                  >
+                    Add Social Network Links
+                  </button>
+                  <span className="text-muted">Optional</span>
+                </div>
+                {socialInputs}
+                <input
+                  type="submit"
+                  value="Submit"
+                  className="btn btn-info btn-block mt-4"
                 />
               </form>
             </div>
