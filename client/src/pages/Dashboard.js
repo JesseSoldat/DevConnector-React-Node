@@ -3,17 +3,31 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
+import Spinner from "../components/Spinner";
+
 class DashboardPage extends Component {
+  componentDidMount() {}
+
   renderContent = user => {
     let dashboardContent;
 
     if (false) {
-      //spinner
+      <Spinner />;
     } else {
-      if (true) {
+      if (false) {
         dashboardContent = (
           <div>
             <p className="lead text-muted">Welcome {user.name}</p>
+          </div>
+        );
+      } else {
+        dashboardContent = (
+          <div>
+            <p className="lead text-muted">Welcom {user.name}</p>
+            <p>You have not yet setup a profile, please add some info</p>
+            <Link to="/create-profile" className="btn btn-lg btn-info">
+              Create Profile
+            </Link>
           </div>
         );
       }

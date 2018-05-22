@@ -6,14 +6,16 @@ import jwtDecode from "jwt-decode";
 import store from "./store";
 import { setCurrentUser } from "./actions/auth";
 
+import "./App.css";
 // Components
 import NavBar from "./components/NavBar";
 // Pages
 import NotFoundPage from "./pages/NotFound";
+import LandingPage from "./pages/Landing";
 import LoginPage from "./pages/Login";
 import RegisterPage from "./pages/Register";
 import DashboardPage from "./pages/Dashboard";
-const LandingPage = () => <h1>Landing</h1>;
+import CreateProfilePage from "./pages/CreateProfile";
 
 if (localStorage.jwtToken) {
   const decoded = jwtDecode(localStorage.jwtToken);
@@ -32,6 +34,11 @@ class App extends Component {
               <Route exact path="/login" component={LoginPage} />
               <Route exact path="/register" component={RegisterPage} />
               <Route exact path="/dashboard" component={DashboardPage} />
+              <Route
+                exact
+                path="/create-profile"
+                component={CreateProfilePage}
+              />
               <Route component={NotFoundPage} />
             </Switch>
           </div>
