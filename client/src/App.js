@@ -17,7 +17,10 @@ import RegisterPage from "./pages/Register";
 import DashboardPage from "./pages/Dashboard";
 import CreateProfilePage from "./pages/CreateProfile";
 
+import setAuthToken from "./utils/setAuthToken";
+
 if (localStorage.jwtToken) {
+  setAuthToken(localStorage.jwtToken);
   const decoded = jwtDecode(localStorage.jwtToken);
   store.dispatch(setCurrentUser(decoded));
 }

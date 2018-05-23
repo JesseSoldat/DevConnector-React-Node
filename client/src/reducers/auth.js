@@ -9,7 +9,7 @@ const initialState = {
 export default function(state = initialState, { type, payload }) {
   switch (type) {
     case SET_CURRENT_USER:
-      console.log("SET_CURRENT_USER ", payload);
+      // console.log("SET_CURRENT_USER ", payload);
       return {
         ...state,
         isAuth: !isEmpty(payload),

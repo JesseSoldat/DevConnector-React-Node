@@ -4,20 +4,29 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import Spinner from "../components/Spinner";
+import { getCurrentProfile } from "../actions/profile";
 
 class DashboardPage extends Component {
-  componentDidMount() {}
+  componentDidMount() {
+    this.props.getCurrentProfile();
+  }
 
   renderContent = user => {
-    let dashboardContent;
+    const { profile, loading } = this.props.profile;
 
-    if (false) {
+    let dashboardContent;
+    console.log("profile", profile);
+
+    if (profile === null || loading) {
       <Spinner />;
     } else {
-      if (false) {
+      if (profile && Object.keys(profile).length > 0) {
         dashboardContent = (
           <div>
             <p className="lead text-muted">Welcome {user.name}</p>
+            <div style={{ marginBottom: "60px" }}>
+              <button className="btn btn-danger">Delete My Account</button>
+            </div>
           </div>
         );
       } else {
@@ -57,8 +66,9 @@ DashboardPage.propTypes = {
   auth: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({ auth }) => ({
-  auth
+const mapStateToProps = ({ auth, profile }) => ({
+  auth,
+  profile
 });
 
-export default connect(mapStateToProps)(DashboardPage);
+export default connect(mapStateToProps, { getCurrentProfile })(DashboardPage);
