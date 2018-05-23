@@ -19,6 +19,7 @@ export default (state = initialState, { type, payload }) => {
         loading: true
       };
     case GET_PROFILE:
+      // console.log("GET_PROFILE", payload);
       return {
         ...state,
         profile: payload,

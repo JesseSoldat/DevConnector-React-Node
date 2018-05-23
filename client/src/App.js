@@ -16,6 +16,7 @@ import LoginPage from "./pages/Login";
 import RegisterPage from "./pages/Register";
 import DashboardPage from "./pages/Dashboard";
 import CreateProfilePage from "./pages/CreateProfile";
+import EditProfilePage from "./pages/EditProfile";
 
 import setAuthToken from "./utils/setAuthToken";
 
@@ -42,6 +43,7 @@ class App extends Component {
                 path="/create-profile"
                 component={CreateProfilePage}
               />
+              <Route exact path="/edit-profile" component={EditProfilePage} />
               <Route component={NotFoundPage} />
             </Switch>
           </div>

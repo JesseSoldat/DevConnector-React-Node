@@ -1,9 +1,13 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
+
+import { logoutUser } from "../actions/auth";
 
 class NavBar extends Component {
-  renderAuthLinks = isAuth => {
+  renderAuthLinks = (isAuth, user) => {
     const authLinks = (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
@@ -15,6 +19,18 @@ class NavBar extends Component {
           <Link className="nav-link" to="/">
             Post Feed
           </Link>
+        </li>
+        <li className="nav-item">
+          <a href="" onClick={this.onLogout} className="nav-link">
+            <img
+              src={user.avatar}
+              alt={user.name}
+              className="rounded-circle"
+              style={{ width: "25px", marginRight: "5px" }}
+              title="You must have a Gravatar connected to your email to display an image"
+            />{" "}
+            Logout
+          </a>
         </li>
       </ul>
     );
@@ -39,6 +55,11 @@ class NavBar extends Component {
     return guestLinks;
   };
 
+  onLogout = e => {
+    e.preventDefault();
+    this.props.logoutUser(this.props.history);
+  };
+
   render() {
     const { user, isAuth } = this.props.auth;
 
@@ -58,7 +79,7 @@ class NavBar extends Component {
           </button>
           <div className="collapse navbar-collapse" id="mobile-nav">
             <ul className="navbar-nav mr-auto" />
-            {this.renderAuthLinks(isAuth)}
+            {this.renderAuthLinks(isAuth, user)}
           </div>
         </div>
       </nav>
@@ -66,8 +87,13 @@ class NavBar extends Component {
   }
 }
 
+NavBar.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
+
 const mapStateToProps = ({ auth }) => ({
   auth
 });
 
-export default connect(mapStateToProps)(NavBar);
+export default connect(mapStateToProps, { logoutUser })(withRouter(NavBar));

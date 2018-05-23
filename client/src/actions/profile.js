@@ -28,3 +28,16 @@ export const getCurrentProfile = () => async dispatch => {
     });
   }
 };
+
+export const createProfile = (profileData, history) => async dispatch => {
+  try {
+    await axios.post("/api/profile", profileData);
+    history.push("/dashboard");
+  } catch (err) {
+    console.log("createProfile err", err);
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data
+    });
+  }
+};

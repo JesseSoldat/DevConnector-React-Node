@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 import TextFieldGroup from "../components/TextFieldGroup";
 import { loginUser } from "../actions/auth";
@@ -21,7 +22,7 @@ class LoginPage extends Component {
   onSubmit = e => {
     e.preventDefault();
     const { email, password } = this.state;
-    this.props.loginUser({ email, password });
+    this.props.loginUser({ email, password }, this.props.history);
   };
   render() {
     const { email, password, errors } = this.state;
@@ -71,4 +72,4 @@ const mapStateToProps = ({ auth }) => ({
   auth
 });
 
-export default connect(mapStateToProps, { loginUser })(LoginPage);
+export default connect(mapStateToProps, { loginUser })(withRouter(LoginPage));

@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
 
 import TextFieldGroup from "../components/TextFieldGroup";
 import SelectListGroup from "../components/SelectListGroup";
 import TextAreaFieldGroup from "../components/TextAreaFieldGroup";
 import InputGroup from "../components/InputGroup";
+import { createProfile } from "../actions/profile";
 
 class CreateProfilePage extends Component {
   state = {
@@ -32,6 +34,24 @@ class CreateProfilePage extends Component {
 
   onSubmit = e => {
     e.preventDefault();
+
+    const profileData = {
+      handle: this.state.handle,
+      company: this.state.company,
+      website: this.state.website,
+      location: this.state.location,
+      status: this.state.status,
+      skills: this.state.skills,
+      githubusername: this.state.githubusername,
+      bio: this.state.bio,
+      twitter: this.state.twitter,
+      facebook: this.state.facebook,
+      linkedin: this.state.linkedin,
+      youtube: this.state.youtube,
+      instagram: this.state.instagram
+    };
+
+    this.props.createProfile(profileData, this.props.history);
   };
 
   onToggleSocialIcons = e => {
@@ -225,4 +245,16 @@ class CreateProfilePage extends Component {
   }
 }
 
-export default CreateProfilePage;
+CreateProfilePage.propTypes = {
+  profile: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = ({ profile, errors }) => ({
+  profile,
+  errors
+});
+
+export default connect(mapStateToProps, { createProfile })(
+  withRouter(CreateProfilePage)
+);

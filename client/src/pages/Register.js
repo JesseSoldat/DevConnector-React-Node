@@ -29,7 +29,7 @@ class RegisterPage extends Component {
     }
 
     const newUser = { name, email, password, password2 };
-    this.props.registerUser(newUser);
+    this.props.registerUser(newUser, this.props.history);
   };
 
   render() {
@@ -95,4 +95,6 @@ const mapStateToProps = ({ auth }) => ({
   auth
 });
 
-export default connect(mapStateToProps, { registerUser })(RegisterPage);
+export default connect(mapStateToProps, { registerUser })(
+  withRouter(RegisterPage)
+);

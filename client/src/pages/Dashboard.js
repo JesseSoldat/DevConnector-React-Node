@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import Spinner from "../components/Spinner";
+import ProfileActions from "../components/ProfileActions";
 import { getCurrentProfile } from "../actions/profile";
 
 class DashboardPage extends Component {
@@ -15,15 +16,15 @@ class DashboardPage extends Component {
     const { profile, loading } = this.props.profile;
 
     let dashboardContent;
-    console.log("profile", profile);
 
     if (profile === null || loading) {
-      <Spinner />;
+      dashboardContent = <Spinner />;
     } else {
       if (profile && Object.keys(profile).length > 0) {
         dashboardContent = (
           <div>
             <p className="lead text-muted">Welcome {user.name}</p>
+            <ProfileActions />
             <div style={{ marginBottom: "60px" }}>
               <button className="btn btn-danger">Delete My Account</button>
             </div>
@@ -63,7 +64,9 @@ class DashboardPage extends Component {
 }
 
 DashboardPage.propTypes = {
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ auth, profile }) => ({
