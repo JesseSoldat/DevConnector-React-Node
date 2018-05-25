@@ -17,7 +17,7 @@ import RegisterPage from "./pages/Register";
 import DashboardPage from "./pages/Dashboard";
 import CreateProfilePage from "./pages/CreateProfile";
 import EditProfilePage from "./pages/EditProfile";
-
+import AddExperiencePage from "./pages/AddExperience";
 import setAuthToken from "./utils/setAuthToken";
 
 if (localStorage.jwtToken) {
@@ -44,6 +44,11 @@ class App extends Component {
                 component={CreateProfilePage}
               />
               <Route exact path="/edit-profile" component={EditProfilePage} />
+              <Route
+                exact
+                path="/add-experience"
+                component={AddExperiencePage}
+              />
               <Route component={NotFoundPage} />
             </Switch>
           </div>
