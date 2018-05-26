@@ -22,6 +22,23 @@ module.exports = app => {
     "instagram"
   ];
 
+  app.get("/api/profiles", async (req, res) => {
+    const errors = {};
+    try {
+      const profiles = await Profile.find().populate("user", [
+        "name",
+        "avatar"
+      ]);
+      if (!profiles) {
+        errors.noprofile = "There are no profiles";
+        return res.status(404).json(errors);
+      }
+      res.send(profiles);
+    } catch (err) {
+      res.status(404).json({ profile: "There are no profiles" });
+    }
+  });
+
   app.get(
     "/api/profile",
     passport.authenticate("jwt", { session: false }),

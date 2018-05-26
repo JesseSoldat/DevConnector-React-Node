@@ -78,7 +78,14 @@ class NavBar extends Component {
             <span className="navbar-toggle-icon" />
           </button>
           <div className="collapse navbar-collapse" id="mobile-nav">
-            <ul className="navbar-nav mr-auto" />
+            <ul className="navbar-nav mr-auto">
+              <li className="nav-item">
+                <Link className="nav-link" to="/profiles">
+                  {" "}
+                  Developers
+                </Link>
+              </li>
+            </ul>
             {this.renderAuthLinks(isAuth, user)}
           </div>
         </div>

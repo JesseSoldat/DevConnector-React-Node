@@ -25,7 +25,17 @@ export default (state = initialState, { type, payload }) => {
         profile: payload,
         loading: false
       };
-
+    case GET_PROFILES:
+      return {
+        ...state,
+        profiles: payload,
+        loading: false
+      };
+    case CLEAR_CURRENT_PROFILE:
+      return {
+        ...state,
+        profile: null
+      };
     default:
       return state;
   }

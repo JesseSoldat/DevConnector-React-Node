@@ -19,6 +19,8 @@ import CreateProfilePage from "./pages/CreateProfile";
 import EditProfilePage from "./pages/EditProfile";
 import AddExperiencePage from "./pages/AddExperience";
 import AddEducationPage from "./pages/AddEducation";
+import ProfilePage from "./pages/Profile";
+import ProfilesPage from "./pages/Profiles";
 import setAuthToken from "./utils/setAuthToken";
 
 if (localStorage.jwtToken) {
@@ -39,6 +41,8 @@ class App extends Component {
               <Route exact path="/login" component={LoginPage} />
               <Route exact path="/register" component={RegisterPage} />
               <Route exact path="/dashboard" component={DashboardPage} />
+              <Route exact path="/profiles" component={ProfilesPage} />
+              <Route exact path="/profile/:handle" component={ProfilePage} />
               <Route
                 exact
                 path="/create-profile"
