@@ -159,4 +159,39 @@ module.exports = app => {
       }
     }
   );
+
+  app.post(
+    "/api/profile/education",
+    passport.authenticate("jwt", { session: false }),
+    async (req, res) => {
+      const {
+        school,
+        degree,
+        fieldofstudy,
+        from,
+        to,
+        current,
+        description
+      } = req.body;
+
+      const newEdu = {
+        school,
+        degree,
+        fieldofstudy,
+        from,
+        to,
+        current,
+        description
+      };
+
+      try {
+        const profile = await Profile.findOne({ user: req.user.id });
+        profile.education.unshift(newEdu);
+        await profile.save();
+        res.send(profile);
+      } catch (err) {
+        res.status(400).send(err);
+      }
+    }
+  );
 };

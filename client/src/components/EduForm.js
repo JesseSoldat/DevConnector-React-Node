@@ -3,11 +3,11 @@ import React, { Component } from "react";
 import TextFieldGroup from "./TextFieldGroup";
 import TextAreaFieldGroup from "./TextAreaFieldGroup";
 
-class ExpForm extends Component {
+class EduForm extends Component {
   state = {
-    company: "",
-    title: "",
-    location: "",
+    school: "",
+    degree: "",
+    fieldofstudy: "",
     from: "",
     to: "",
     current: false,
@@ -15,12 +15,6 @@ class ExpForm extends Component {
     errors: {},
     disabled: false
   };
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
-    }
-  }
 
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -35,64 +29,65 @@ class ExpForm extends Component {
 
   onSubmit = e => {
     e.preventDefault();
+
     const {
-      company,
-      title,
-      location,
+      school,
+      degree,
+      fieldofstudy,
       from,
       to,
       current,
       description
     } = this.state;
 
-    const experience = {
-      company,
-      title,
-      location,
+    const edu = {
+      school,
+      degree,
+      fieldofstudy,
       from,
       to,
       current,
       description
     };
 
-    this.props.handleSubmit(experience);
+    this.props.handleSubmit(edu);
   };
 
   render() {
     const {
       errors,
-      company,
-      title,
-      location,
+      school,
+      degree,
+      fieldofstudy,
       from,
       to,
-      disabled,
       current,
-      description
+      description,
+      disabled
     } = this.state;
 
     return (
       <form onSubmit={this.onSubmit}>
         <TextFieldGroup
-          placeholder="* Company"
-          name="company"
-          value={company}
+          placeholder="* School"
+          name="school"
+          value={school}
           onChange={this.onChange}
-          error={errors.company}
+          error={errors.school}
         />
         <TextFieldGroup
-          placeholder="* Job Title"
-          name="title"
-          value={title}
+          placeholder="* Degree or Certification"
+          name="degree"
+          value={degree}
           onChange={this.onChange}
-          error={errors.title}
+          error={errors.degree}
         />
         <TextFieldGroup
-          placeholder="Location"
-          name="location"
-          value={location}
+          placeholder="* Field of Study"
+          name="fieldofstudy"
+          value={fieldofstudy}
           onChange={this.onChange}
-          error={errors.location}
+          error={errors.fieldofstudy}
         />
         <h6>From Date</h6>
         <TextFieldGroup
@@ -117,21 +112,19 @@ class ExpForm extends Component {
             className="form-check-input"
             name="current"
             value={current}
-            checked={current}
             onChange={this.onCheck}
-            id="current"
           />
           <label htmlFor="current" className="form-check-label">
-            Current Job
+            Current School
           </label>
         </div>
         <TextAreaFieldGroup
-          placeholder="Job Description"
+          placeholder="Program Description"
           name="description"
           value={description}
           onChange={this.onChange}
           error={errors.description}
-          info="Tell us about the the position"
+          info="Tell us about the program that you were in"
         />
         <input
           type="submit"
@@ -143,4 +136,4 @@ class ExpForm extends Component {
   }
 }
 
-export default ExpForm;
+export default EduForm;

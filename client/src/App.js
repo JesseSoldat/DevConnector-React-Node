@@ -18,6 +18,7 @@ import DashboardPage from "./pages/Dashboard";
 import CreateProfilePage from "./pages/CreateProfile";
 import EditProfilePage from "./pages/EditProfile";
 import AddExperiencePage from "./pages/AddExperience";
+import AddEducationPage from "./pages/AddEducation";
 import setAuthToken from "./utils/setAuthToken";
 
 if (localStorage.jwtToken) {
@@ -49,6 +50,7 @@ class App extends Component {
                 path="/add-experience"
                 component={AddExperiencePage}
               />
+              <Route exact path="/add-education" component={AddEducationPage} />
               <Route component={NotFoundPage} />
             </Switch>
           </div>
