@@ -2,8 +2,9 @@ import React, { Component } from "react";
 
 import TextFieldGroup from "./TextFieldGroup";
 import TextAreaFieldGroup from "./TextAreaFieldGroup";
+import { addExperience } from "../actions/profile";
 
-class ExpEduForm extends Component {
+class ExpForm extends Component {
   state = {
     company: "",
     title: "",
@@ -35,7 +36,27 @@ class ExpEduForm extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    this.props.handleSubmit("test");
+    const {
+      company,
+      title,
+      location,
+      from,
+      to,
+      current,
+      description
+    } = this.state;
+
+    const experience = {
+      company,
+      title,
+      location,
+      from,
+      to,
+      current,
+      description
+    };
+
+    this.props.handleSubmit(experience);
   };
 
   render() {
@@ -50,6 +71,7 @@ class ExpEduForm extends Component {
       current,
       description
     } = this.state;
+
     return (
       <form onSubmit={this.onSubmit}>
         <TextFieldGroup
@@ -87,7 +109,7 @@ class ExpEduForm extends Component {
           type="date"
           value={to}
           onChange={this.onChange}
-          error={to}
+          error={errors.to}
           disabled={disabled ? "disabled" : ""}
         />
         <div className="form-check mb-4">
@@ -122,4 +144,4 @@ class ExpEduForm extends Component {
   }
 }
 
-export default ExpEduForm;
+export default ExpForm;

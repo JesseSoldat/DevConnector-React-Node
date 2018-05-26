@@ -124,4 +124,39 @@ module.exports = app => {
       // }
     }
   );
+
+  app.post(
+    "/api/profile/experience",
+    passport.authenticate("jwt", { session: false }),
+    async (req, res) => {
+      const {
+        title,
+        company,
+        location,
+        from,
+        to,
+        current,
+        description
+      } = req.body;
+
+      const newExp = {
+        title,
+        company,
+        location,
+        from,
+        to,
+        current,
+        description
+      };
+
+      try {
+        const profile = await Profile.findOne({ user: req.user.id });
+        profile.experience.unshift(newExp);
+        await profile.save();
+        res.send(profile);
+      } catch (err) {
+        res.status(400).send(err);
+      }
+    }
+  );
 };

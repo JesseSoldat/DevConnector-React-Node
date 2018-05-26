@@ -1,12 +1,14 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
-import ExpEduForm from "../components/ExpEduForm";
+import ExpForm from "../components/ExpForm";
+import { addExperience } from "../actions/profile";
 
 class AddExperiencePage extends Component {
-  handleSubmit = form => {
-    console.log("form", form);
+  handleSubmit = exp => {
+    console.log(exp);
+    this.props.addExperience(exp, this.props.history);
   };
 
   render() {
@@ -23,8 +25,7 @@ class AddExperiencePage extends Component {
                 Add any job or position that you have had in the past or current
               </p>
               <small className="d-block pb-3">* = required fields</small>
-              <ExpEduForm handleSubmit={this.handleSubmit} />
-              <div className="pb-8" />
+              <ExpForm handleSubmit={this.handleSubmit} />
             </div>
           </div>
         </div>
@@ -33,4 +34,4 @@ class AddExperiencePage extends Component {
   }
 }
 
-export default connect(null)(AddExperiencePage);
+export default connect(null, { addExperience })(withRouter(AddExperiencePage));

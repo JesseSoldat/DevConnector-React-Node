@@ -41,3 +41,15 @@ export const createProfile = (profileData, history) => async dispatch => {
     });
   }
 };
+
+export const addExperience = (expData, history) => async dispatch => {
+  try {
+    await axios.post("/api/profile/experience", expData);
+    history.push("/dashboard");
+  } catch (err) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data
+    });
+  }
+};
