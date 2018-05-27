@@ -60,6 +60,22 @@ module.exports = app => {
     }
   );
 
+  app.get("/api/profile/handle/:handle", async (req, res) => {
+    const errors = {};
+    try {
+      const profile = await Profile.findOne({
+        handle: req.params.handle
+      }).populate("user");
+      if (!profile) {
+        errors.noprofile = "There is no profile for this user";
+        res.status(404).send(errors);
+      }
+      res.send(profile);
+    } catch (err) {
+      res.status(404).send(err);
+    }
+  });
+
   app.post(
     "/api/profile",
     passport.authenticate("jwt", { session: false }),
@@ -82,13 +98,13 @@ module.exports = app => {
         profileFields[field] = req.body[field];
       });
 
-      // console.log("social", socialFields);
       profileFields.social = socialFields;
-      // console.log("profile", profileFields);
       const { skills } = req.body;
       if (skills.length > 0) {
         profileFields.skills = skills.split(",");
       }
+
+      console.log("profile", profileFields);
 
       try {
         //CREATE NEW PROFILE
@@ -116,33 +132,11 @@ module.exports = app => {
           console.log("update");
           res.send(updatedProfile);
         }
+        res.send();
       } catch (err) {
         console.log("err", err);
-
         res.status(400).send(err);
       }
-
-      // fieldsArray.forEach(field => {
-      //   profileFields[field] = req.body[field];
-      // });
-
-      // if (typeof req.body.skills !== "undefined") {
-      //   profileFields.skills = req.body.skills.split(",");
-      // }
-
-      // const social = {};
-      // socialFieldsArray.forEach(field => {
-      //   if (!req.body[field]) return;
-      //   social[field] = req.body[field];
-      // });
-
-      // const socialKeys = Object.keys(social);
-      // if (socialKeys.length > 0) {
-      //   profileFields["social"] = {};
-      //   socialKeys.forEach(key => {
-      //     profileFields.social[key] = social[key];
-      //   });
-      // }
     }
   );
 

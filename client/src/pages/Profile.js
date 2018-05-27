@@ -4,25 +4,34 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 import Spinner from "../components/Spinner";
+import ProfileHeader from "../components/ProfileHeader";
+import { getProfileByHandle } from "../actions/profile";
 
 class ProfilePage extends Component {
-  componentDidMount() {}
+  componentDidMount() {
+    this.props.getProfileByHandle(this.props.match.params.handle);
+  }
 
   render() {
     const { profile, loading } = this.props.profile;
+    console.log(profile);
+
     let profileContent;
 
     if (profile === null || loading) {
       profileContent = <Spinner />;
     } else {
       profileContent = (
-        <div className="row">
-          <div className="col-md-6">
-            <Link to="/profiles" className="btn btn-light mb-3 float-left">
-              Back To Profiles
-            </Link>
+        <div>
+          <div className="row">
+            <div className="col-md-6">
+              <Link to="/profiles" className="btn btn-light mb-3 float-left">
+                Back To Profiles
+              </Link>
+            </div>
+            <div className="col-md-6" />
           </div>
-          <div className="col-md-6" />
+          <ProfileHeader profile={profile} />
         </div>
       );
     }
@@ -46,4 +55,4 @@ const mapStateToProps = ({ profile }) => ({
   profile
 });
 
-export default connect(mapStateToProps)(ProfilePage);
+export default connect(mapStateToProps, { getProfileByHandle })(ProfilePage);

@@ -4,6 +4,7 @@ import TextFieldGroup from "./TextFieldGroup";
 import TextAreaFieldGroup from "./TextAreaFieldGroup";
 import InputGroup from "./InputGroup";
 import SelectListGroup from "./SelectListGroup";
+import Spinner from "./Spinner";
 
 class ProfileForm extends Component {
   state = {
@@ -44,12 +45,10 @@ class ProfileForm extends Component {
       skills,
       githubusername,
       bio,
-      twitter,
-      facebook,
-      linkedin,
-      youtube,
-      instagram
+      social
     } = profile;
+
+    const { twitter, facebook, linkedin, youtube, instagram } = social;
 
     // console.log("skills", skills);
     let skillsCSV;
@@ -79,6 +78,16 @@ class ProfileForm extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  onSocialChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  onToggleSocialIcons = e => {
+    this.setState(prevState => ({
+      displaySocialInputs: !prevState.displaySocialInputs
+    }));
+  };
+
   onSubmit = e => {
     e.preventDefault();
 
@@ -91,20 +100,16 @@ class ProfileForm extends Component {
       skills: this.state.skills,
       githubusername: this.state.githubusername,
       bio: this.state.bio,
-      twitter: this.state.twitter,
-      facebook: this.state.facebook,
-      linkedin: this.state.linkedin,
-      youtube: this.state.youtube,
-      instagram: this.state.instagram
+      social: {
+        facebook: this.state.facebook,
+        linkedin: this.state.linkedin,
+        youtube: this.state.youtube,
+        instagram: this.state.instagram,
+        twitter: this.state.twitter
+      }
     };
 
     this.props.submit(profileData);
-  };
-
-  onToggleSocialIcons = e => {
-    this.setState(prevState => ({
-      displaySocialInputs: !prevState.displaySocialInputs
-    }));
   };
 
   render() {
@@ -148,7 +153,7 @@ class ProfileForm extends Component {
             name="twitter"
             icon="fab fa-twitter"
             value={twitter}
-            onChange={this.onChange}
+            onChange={this.onSocialChange}
             error={errors.twitter}
           />
 
@@ -157,7 +162,7 @@ class ProfileForm extends Component {
             name="facebook"
             icon="fab fa-facebook"
             value={facebook}
-            onChange={this.onChange}
+            onChange={this.onSocialChange}
             error={errors.facebook}
           />
 
@@ -166,7 +171,7 @@ class ProfileForm extends Component {
             name="linkedin"
             icon="fab fa-linkedin"
             value={linkedin}
-            onChange={this.onChange}
+            onChange={this.onSocialChange}
             error={errors.linkedin}
           />
 
@@ -175,7 +180,7 @@ class ProfileForm extends Component {
             name="youtube"
             icon="fab fa-youtube"
             value={youtube}
-            onChange={this.onChange}
+            onChange={this.onSocialChange}
             error={errors.youtube}
           />
 
@@ -184,15 +189,19 @@ class ProfileForm extends Component {
             name="instagram"
             icon="fab fa-instagram"
             value={instagram}
-            onChange={this.onChange}
+            onChange={this.onSocialChange}
             error={errors.instagram}
           />
         </div>
       );
     }
 
-    return (
+    let content = <Spinner />;
+
+    const form = (
       <form onSubmit={this.onSubmit}>
+        <h1 className="display-4 text-center">Edit Profile</h1>
+        <small className="d-block pb-3">* = required fields</small>
         <TextFieldGroup
           placeholder="* Profile Handle"
           name="handle"
@@ -278,6 +287,15 @@ class ProfileForm extends Component {
         />
       </form>
     );
+
+    if (
+      this.props.profile !== null &&
+      Object.keys(this.props.profile).length > 0
+    ) {
+      content = form;
+    }
+
+    return <div>{content}</div>;
   }
 }
 

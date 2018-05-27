@@ -110,28 +110,33 @@ const ProfileSchema = new Schema({
   social: {
     youtube: {
       type: String,
-      trim: true
+      trim: true,
+      default: ""
     },
     twitter: {
       type: String,
-      trim: true
+      trim: true,
+      default: ""
     },
     facebook: {
       type: String,
-      trim: true
+      trim: true,
+      default: ""
     },
     linkedin: {
       type: String,
-      trim: true
+      trim: true,
+      default: ""
     },
     instagram: {
       type: String,
-      trim: true
+      trim: true,
+      default: ""
     }
   },
   date: {
     type: Date,
-    default: Date.now
+    default: Date.now()
   }
 });
 
