@@ -1,4 +1,5 @@
 import axios from "axios";
+import setAuthToken from "../utils/setAuthToken";
 
 import {
   GET_PROFILE,
@@ -94,5 +95,42 @@ export const deleteExperience = id => async dispatch => {
       type: GET_ERRORS,
       payload: err.response.data
     });
+  }
+};
+
+export const deleteEducation = id => async dispatch => {
+  try {
+    const res = await axios.delete(`/api/profile/education/${id}`);
+    dispatch({
+      type: GET_PROFILE,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data
+    });
+  }
+};
+
+export const deleteAccount = history => async dispatch => {
+  if (window.confirm("Are you sure? This can NOT be undone!")) {
+    try {
+      await axios.delete("/api/profile");
+      localStorage.removeItem("jwtToken");
+
+      setAuthToken(false);
+
+      dispatch({
+        type: SET_CURRENT_USER,
+        payload: {}
+      });
+      history.push("/");
+    } catch (err) {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    }
   }
 };

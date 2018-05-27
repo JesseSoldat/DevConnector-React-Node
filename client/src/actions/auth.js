@@ -16,6 +16,8 @@ export const loginUser = (userData, history) => async dispatch => {
 
     localStorage.setItem("jwtToken", token);
 
+    setAuthToken(token);
+
     const decoded = jwtDecode(token);
 
     dispatch(setCurrentUser(decoded));
@@ -29,6 +31,8 @@ export const registerUser = (userData, history) => async dispatch => {
     const token = res.data;
 
     localStorage.setItem("jwtToken", token);
+
+    setAuthToken(token);
 
     const decoded = jwtDecode(token);
 

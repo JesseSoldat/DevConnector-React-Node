@@ -85,6 +85,10 @@ module.exports = app => {
       // console.log("social", socialFields);
       profileFields.social = socialFields;
       // console.log("profile", profileFields);
+      const { skills } = req.body;
+      if (skills.length > 0) {
+        profileFields.skills = skills.split(",");
+      }
 
       try {
         //CREATE NEW PROFILE
@@ -228,6 +232,21 @@ module.exports = app => {
         res.send(profile);
       } catch (err) {
         res.status(404).send(err);
+      }
+    }
+  );
+
+  app.delete(
+    "/api/profile",
+    passport.authenticate("jwt", { session: false }),
+    async (req, res) => {
+      const { id } = req.user;
+      try {
+        await Profile.findOneAndRemove({ user: id });
+        await User.findOneAndRemove({ _id: id });
+        res.send({ success: true });
+      } catch (err) {
+        res.status(400).send(err);
       }
     }
   );

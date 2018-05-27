@@ -1,17 +1,22 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import Spinner from "../components/Spinner";
 import Experience from "../components/Experience";
+import Education from "../components/Education";
 import ProfileActions from "../components/ProfileActions";
-import { getCurrentProfile } from "../actions/profile";
+import { getCurrentProfile, deleteAccount } from "../actions/profile";
 
 class DashboardPage extends Component {
   componentDidMount() {
     this.props.getCurrentProfile();
   }
+
+  onDeleteClick = e => {
+    this.props.deleteAccount(this.props.history);
+  };
 
   renderContent = user => {
     const { profile, loading } = this.props.profile;
@@ -26,16 +31,31 @@ class DashboardPage extends Component {
           <div>
             <p className="lead text-muted">Welcome {user.name}</p>
             <ProfileActions />
-            <Experience experience={profile.experience} />
+            {profile.experience.length > 0 ? (
+              <Experience experience={profile.experience} />
+            ) : (
+              <div>
+                <h4 className="mb-4 mt-2">No Experience added</h4>
+              </div>
+            )}
+            {profile.education.length > 0 ? (
+              <Education education={profile.education} />
+            ) : (
+              <div>
+                <h4 className="mb-4 mt-2">No Education added</h4>
+              </div>
+            )}
             <div style={{ marginBottom: "60px" }}>
-              <button className="btn btn-danger">Delete My Account</button>
+              <button className="btn btn-danger" onClick={this.onDeleteClick}>
+                Delete My Account
+              </button>
             </div>
           </div>
         );
       } else {
         dashboardContent = (
           <div>
-            <p className="lead text-muted">Welcom {user.name}</p>
+            <p className="lead text-muted">Welcome {user.name}</p>
             <p>You have not yet setup a profile, please add some info</p>
             <Link to="/create-profile" className="btn btn-lg btn-info">
               Create Profile
@@ -76,4 +96,6 @@ const mapStateToProps = ({ auth, profile }) => ({
   profile
 });
 
-export default connect(mapStateToProps, { getCurrentProfile })(DashboardPage);
+export default connect(mapStateToProps, { getCurrentProfile, deleteAccount })(
+  withRouter(DashboardPage)
+);
