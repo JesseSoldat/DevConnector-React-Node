@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import Spinner from "../components/Spinner";
+import Experience from "../components/Experience";
 import ProfileActions from "../components/ProfileActions";
 import { getCurrentProfile } from "../actions/profile";
 
@@ -25,6 +26,7 @@ class DashboardPage extends Component {
           <div>
             <p className="lead text-muted">Welcome {user.name}</p>
             <ProfileActions />
+            <Experience experience={profile.experience} />
             <div style={{ marginBottom: "60px" }}>
               <button className="btn btn-danger">Delete My Account</button>
             </div>

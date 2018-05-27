@@ -211,4 +211,24 @@ module.exports = app => {
       }
     }
   );
+
+  app.delete(
+    "/api/profile/experience/:exp_id",
+    passport.authenticate("jwt", { session: false }),
+    async (req, res) => {
+      try {
+        const profile = await Profile.findOne({ user: req.user.id });
+
+        const removeIndex = profile.experience
+          .map(exp => exp.id)
+          .indexOf(req.params.exp_id);
+        profile.experience.splice(removeIndex, 1);
+
+        await profile.save();
+        res.send(profile);
+      } catch (err) {
+        res.status(404).send(err);
+      }
+    }
+  );
 };
