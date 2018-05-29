@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 
 import Spinner from "../components/Spinner";
 import ProfileHeader from "../components/ProfileHeader";
+import ProfileAbout from "../components/ProfileAbout";
+import ProfileCreds from "../components/ProfileCreds";
 import { getProfileByHandle } from "../actions/profile";
 
 class ProfilePage extends Component {
@@ -14,13 +16,13 @@ class ProfilePage extends Component {
 
   render() {
     const { profile, loading } = this.props.profile;
-    console.log(profile);
 
     let profileContent;
 
     if (profile === null || loading) {
       profileContent = <Spinner />;
     } else {
+      const { experience, education } = profile;
       profileContent = (
         <div>
           <div className="row">
@@ -32,6 +34,8 @@ class ProfilePage extends Component {
             <div className="col-md-6" />
           </div>
           <ProfileHeader profile={profile} />
+          <ProfileAbout profile={profile} />
+          <ProfileCreds experience={experience} education={education} />
         </div>
       );
     }

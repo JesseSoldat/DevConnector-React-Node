@@ -29,23 +29,25 @@ class DashboardPage extends Component {
       if (profile && Object.keys(profile).length > 0) {
         dashboardContent = (
           <div>
-            <p className="lead text-muted">Welcome {user.name}</p>
-            <ProfileActions />
-            {profile.experience.length > 0 ? (
-              <Experience experience={profile.experience} />
-            ) : (
-              <div>
-                <h4 className="mb-4 mt-2">No Experience added</h4>
-              </div>
-            )}
-            {profile.education.length > 0 ? (
-              <Education education={profile.education} />
-            ) : (
-              <div>
-                <h4 className="mb-4 mt-2">No Education added</h4>
-              </div>
-            )}
-            <div style={{ marginBottom: "60px" }}>
+            <div className="pb-5">
+              <p className="lead text-muted">Welcome {user.name}</p>
+              <ProfileActions />
+              {profile.experience.length > 0 ? (
+                <Experience experience={profile.experience} />
+              ) : (
+                <div>
+                  <h4 className="mb-4 mt-2">No Experience added</h4>
+                </div>
+              )}
+              {profile.education.length > 0 ? (
+                <Education education={profile.education} />
+              ) : (
+                <div>
+                  <h4 className="mb-4 mt-2">No Education added</h4>
+                </div>
+              )}
+            </div>
+            <div>
               <button className="btn btn-danger" onClick={this.onDeleteClick}>
                 Delete My Account
               </button>

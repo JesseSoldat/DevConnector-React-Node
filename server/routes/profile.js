@@ -104,8 +104,6 @@ module.exports = app => {
         profileFields.skills = skills.split(",");
       }
 
-      console.log("profile", profileFields);
-
       try {
         //CREATE NEW PROFILE
         const profile = await Profile.findOne({ user: req.user.id });
