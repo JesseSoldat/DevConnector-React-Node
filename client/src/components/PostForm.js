@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 import TextAreaFieldGroup from "./TextAreaFieldGroup";
+import { addPost } from "../actions/posts";
 
 class PostForm extends Component {
   state = {
@@ -15,6 +17,16 @@ class PostForm extends Component {
 
   onSubmit = e => {
     e.preventDefault();
+    if (this.state.text === "") return;
+
+    const { user } = this.props.auth;
+    const newPost = {
+      text: this.state.text,
+      name: user.name,
+      avatar: user.avatar
+    };
+    this.props.addPost(newPost);
+    this.setState({ text: "" });
   };
 
   render() {
@@ -47,8 +59,8 @@ class PostForm extends Component {
 }
 
 PostForm.propTypes = {
-  auth: propTypes.object.isRequired,
-  errors: propTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = ({ auth, errors }) => ({
@@ -56,4 +68,4 @@ const mapStateToProps = ({ auth, errors }) => ({
   errors
 });
 
-export default connect(mapStateToProps)(PostForm);
+export default connect(mapStateToProps, { addPost })(PostForm);

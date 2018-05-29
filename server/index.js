@@ -16,6 +16,7 @@ require("./services/passport")(passport);
 
 require("./routes/user")(app);
 require("./routes/profile")(app);
+require("./routes/post")(app);
 
 app.get("*", (req, res) => res.send("JLab connection is established...."));
 
